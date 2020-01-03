@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useHttp } from '../hooks/http.hook'
+
 // import styles from './AuthPage.module.css'
 
 export const AuthPage = () => {
@@ -41,11 +43,14 @@ export const AuthPage = () => {
             </div>
           </div>
           <div className='card-action'>
-            {/* <button className={'btn yellow darken-4 ' + styles.mr10}> */}
-            <button className='btn grey lighten-5 black-text'>Войти</button>
-            <button className='btn grey lighten-5 black-text'>
-              Регистрация
-            </button>
+            <div className='row'>
+              <button className='btn grey lighten-5 black-text col m6 s12'>
+                Войти
+              </button>
+              <button className='btn grey lighten-5 black-text col m6 s12'>
+                Регистрация
+              </button>
+            </div>
           </div>
         </div>
       </div>
