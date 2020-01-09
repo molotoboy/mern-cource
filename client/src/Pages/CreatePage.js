@@ -1,14 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useHttp } from '../hooks/http.hook'
+import { AuthContext } from '../context/AuthContext'
+import { useHistory } from 'react-router-dom'
 
 export const CreatePage = () => {
-  const { request } = useHTTP()
-  const [link, useLink] = useState('')
+  const history = useHistory()
+  const auth = useContext(AuthContext)
+  const { request } = useHttp()
+  const [link, setLink] = useState('')
 
-  const pressHendler = async e => {
+  const pressHandler = async e => {
     if (e.key === 'Enter') {
       try {
-        const data = await request('/api/link/generate', 'POST', { from: link })
-        console.log(data)
+        const data = await request(
+          '/api/link/generate',
+          'POST',
+          { from: link },
+          { Authorization: `Bearer ${auth.token}` }
+        )
+        history.push(`/detail/${data.link._id}`)
       } catch (error) {}
     }
   }
@@ -24,7 +34,7 @@ export const CreatePage = () => {
             name='link'
             value={link}
             onChange={e => setLink(e.target.value)}
-            onKeyPress={pressHendler}
+            onKeyPress={pressHandler}
           />
           <label htmlFor='link'>Вставьте ссылку</label>
         </div>
